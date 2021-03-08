@@ -1,10 +1,7 @@
 package org.launchcode.hellospring.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller //To designate a given class as a controller within the Spring framework, place @Controller annotation atop controller class
 public class HelloController {
@@ -32,7 +29,8 @@ public class HelloController {
 
     //Handle requests from query parameters of the form /hello?name=LaunchCode :
     // (note that /hello has to be commented out to run this method since they live at the same path)
-    @GetMapping("hello")
+//    @GetMapping("hello")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "hello") //@RequestMapping is more general mapping annotation. Putting the types or requests in annotation params specifies which types of requests a @RequestMapping will accept
     @ResponseBody
     public String helloWithQueryParam(@RequestParam String name) { //@RequestParam signifies to Spring that this method expects a query param called 'name'. query param and method param have to match
         return "Hello, " + name + "!";
@@ -44,4 +42,33 @@ public class HelloController {
     public String helloWithPathParam(@PathVariable String name) { //@PathVariable tells SpringBoot that handler method is looking for a request to /hello/name where the name can be anything and we're going to take the value of that 'name' and place it in the method param 'name'.
         return "Hello, " + name + "!";
     }
+
+//    //Method to display a form :
+//    //*note: form element itself (line 55) does not have a method attribute like 'method='get''. default method is GET, which we're set up for with our helloWithQueryParam handler being set up with @GetMapping for get requests
+//    @GetMapping("form")
+//    @ResponseBody
+//    public String helloForm() {
+//        return "<html>" +
+//                "<body>" +
+//                "<form action='hello'>" + //'action' tells form to submit request to /hello. we can do this because we already created a handler method that can dynamically create requests with the query parameter called name (found in method helloWithQueryParam), so we already have the HTTP handler we need
+//                "<input type='text' name='name'>" + //'name' to left of '=' is the param identifier used to submit what's in the form input, and 'name' to right of '=' is just what we're calling that. our form has a single input called 'name' (right of '='? or both sides?), and we have a request handler that accepts requests at the same path with a query param called 'name'.
+//                "<input type='submit' value='Greet me!'>" +
+//                "</form>" +
+//                "</body>" +
+//                "</html>";
+//    }
+
+    @GetMapping("form")
+    @ResponseBody
+    public String helloForm() {
+        return "<html>" +
+                "<body>" +
+                "<form action='hello' method='post'>" + //changed mapping annotation for helloWithQueryParam from @GetMapping to @RequestMapping so we can use the method='post'
+                "<input type='text' name='name'>" +
+                "<input type='submit' value='Greet me!'>" +
+                "</form>" +
+                "</body>" +
+                "</html>";
+    }
+
 }
