@@ -2,6 +2,7 @@ package org.launchcode.hellospring.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,7 +30,7 @@ public class HelloController {
         return "Goodbye, Spring!";
     }
 
-    //Handle requests of the form /hello?name=LaunchCode :
+    //Handle requests from query parameters of the form /hello?name=LaunchCode :
     // (note that /hello has to be commented out to run this method since they live at the same path)
     @GetMapping("hello")
     @ResponseBody
@@ -37,4 +38,10 @@ public class HelloController {
         return "Hello, " + name + "!";
     }
 
+    //Handle requests where variable is part path, not query ... of the form /hello/LaunchCode :
+    @GetMapping("hello/{name}") //put '/' after hello and variable 'name' in curly brackets to signify you want this to accept piece of data in path
+    @ResponseBody
+    public String helloWithPathParam(@PathVariable String name) { //@PathVariable tells SpringBoot that handler method is looking for a request to /hello/name where the name can be anything and we're going to take the value of that 'name' and place it in the method param 'name'.
+        return "Hello, " + name + "!";
+    }
 }
