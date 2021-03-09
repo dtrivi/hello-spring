@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+    <ul>
+        <th:block th:each="name : ${names}"> <!-- "for each 'name' in a list of names". 'name' is our loop variable -->
+            <li th:text="${name}"></li> <!-- '${names}' on line 10 should already be defined. it's passed in from a controller. 'name' is not a predefined variable. that's one we define on line 10 (making it local). when we reference that variable, as we do inside the loop, we have to use the ${} syntax, like '${name}'. -->
+        </th:block> <!-- 'th:block' is the wrapper, it's a block that outlines and contains the code that will be repeated once for each iteration of the loop. -->
+    </ul>
+
+<!--    <h3>Code Names</h3> &lt;!&ndash; produces one heading, 1 ordered lists, and 3 coding names (each name labeled as '1, 2, 3') &ndash;&gt;-->
+<!--    <ol>-->
+<!--        <li th:each="name : ${names}" th:text="${name}"></li>-->
+<!--    </ol>-->
+
+<!--    <h3>Code Names</h3> &lt;!&ndash; produces one heading, 3 ordered lists, and 3 coding names (each name labeled as '1') &ndash;&gt;-->
+<!--    <ol th:each="name : ${names}">-->
+<!--        <li th:text="${name}"></li>-->
+<!--    </ol>-->
+
+</body>
+</html>
